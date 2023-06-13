@@ -45,8 +45,8 @@ const createUnlikeRestaurantButtonTemplate = () => `
 `;
 
 export {
-    createRestaurantItemTemplate,
-    createRestaurantDetailTemplate,
-    createLikeRestaurantButtonTemplate,
-    createUnlikeRestaurantButtonTemplate
+  createRestaurantItemTemplate,
+  createRestaurantDetailTemplate,
+  createLikeRestaurantButtonTemplate,
+  createUnlikeRestaurantButtonTemplate,
 };

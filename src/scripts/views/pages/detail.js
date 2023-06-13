@@ -3,55 +3,55 @@ import CONFIG from '../../globals/config';
 import LikeButtonPresenter from '../../utils/like-button-presenter';
 
 const Detail = {
-    async render() {
-        return `
+  async render() {
+    return `
         <div class="detail-content">
             <div id="detailRestaurant" class="detailRestaurant"></div>
             <div id="likeButtonContainer"></div>
         </div>
     `;
-    },
+  },
 
-    async afterRender() {
-        const url = window.location.hash.slice(1).toLowerCase();
-        const urlParams = url.split('/');
-        const pictureId = urlParams[2];
+  async afterRender() {
+    const url = window.location.hash.slice(1).toLowerCase();
+    const urlParams = url.split('/');
+    const pictureId = urlParams[2];
 
-        const restaurantDetailContainer = document.querySelector('#detailRestaurant');
-        restaurantDetailContainer.innerHTML = '';
+    const restaurantDetailContainer = document.querySelector('#detailRestaurant');
+    restaurantDetailContainer.innerHTML = '';
 
-        try {
-            const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${pictureId}`);
-            const responseJson = await response.json();
-            const { restaurant } = responseJson;
+    try {
+      const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${pictureId}`);
+      const responseJson = await response.json();
+      const { restaurant } = responseJson;
 
-            const Menu = (menus) => {
-                let menuList = '';
+      const Menu = (menus) => {
+        let menuList = '';
 
-                menus.forEach((menu) => {
-                    menuList += `<li tabindex="0">${menu.name}</li>`;
-                });
-                return menuList;
-            };
+        menus.forEach((menu) => {
+          menuList += `<li tabindex="0">${menu.name}</li>`;
+        });
+        return menuList;
+      };
 
-            const Review = (reviews) => {
-                let reviewList = '';
+      const Review = (reviews) => {
+        let reviewList = '';
 
-                reviews.forEach((review) => {
-                    reviewList += `
+        reviews.forEach((review) => {
+          reviewList += `
             <div class="customer-review">
               <p tabindex="0"><span>Name :</span> ${review.name}</p>
               <p class="customer-review-date" tabindex="0"><span>Date :</span> ${review.date}</p>
               <p tabindex="0"><span>Review :</span> ${review.review}</p>
             </div>
             `;
-                });
-                return reviewList;
-            };
+        });
+        return reviewList;
+      };
 
-            if (restaurant) {
-                // Menampilkan elemen detail-item
-                restaurantDetailContainer.innerHTML = `
+      if (restaurant) {
+        // Menampilkan elemen detail-item
+        restaurantDetailContainer.innerHTML = `
                 <h1 class="resto-name">${restaurant.name}</h2>
                 <img class="resto-image" src="${CONFIG.BASE_IMAGE_URL + restaurant.pictureId}" alt="${restaurant.name}" />
                 <div class="resto-info">
@@ -85,47 +85,47 @@ const Detail = {
                     </div>
                 </div>
             `;
-            } else {
-                restaurantDetailContainer.innerHTML = '<p>Restaurant tidak ditemukan.</p>';
-            }
-        } catch (error) {
-            console.log('Error:', error);
-            restaurantDetailContainer.innerHTML = '<p>Terjadi kesalahan saat memuat data.</p>';
-        }
+      } else {
+        restaurantDetailContainer.innerHTML = '<p>Restaurant tidak ditemukan.</p>';
+      }
+    } catch (error) {
+      console.log('Error:', error);
+      restaurantDetailContainer.innerHTML = '<p>Terjadi kesalahan saat memuat data.</p>';
+    }
 
-        const likeButtonContainer = document.querySelector('#likeButtonContainer');
-        likeButtonContainer.innerHTML = '';
+    const likeButtonContainer = document.querySelector('#likeButtonContainer');
+    likeButtonContainer.innerHTML = '';
 
-        try {
-            const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${pictureId}`);
-            const responseJson = await response.json();
-            const { restaurant } = responseJson;
+    try {
+      const response = await fetch(`https://restaurant-api.dicoding.dev/detail/${pictureId}`);
+      const responseJson = await response.json();
+      const { restaurant } = responseJson;
 
-            if (restaurant) {
-                likeButtonContainer.innerHTML = `
+      if (restaurant) {
+        likeButtonContainer.innerHTML = `
                 <button aria-label="like this movie" id="likeButton" class="like">
                     <i class="fa fa-heart-o" aria-hidden="true"></i>
                 </button>
             `;
-            } else {
-                likeButtonContainer.innerHTML = '<p>Restaurant tidak ditemukan.</p>';
-            }
-            LikeButtonPresenter.init({
-                likeButtonContainer: document.querySelector('#likeButtonContainer'),
-                favoriteRestaurant: FavoriteRestaurantIdb,
-                restaurant: {
-                    id: restaurant.id,
-                    name: restaurant.name,
-                    description: restaurant.description,
-                    pictureId: restaurant.pictureId,
-                    rating: restaurant.rating,
-                },
-            });
-        } catch (error) {
-            console.log('Error:', error);
-            likeButtonContainer.innerHTML = '<p>Terjadi kesalahan saat memuat data.</p>';
-        }
-    },
+      } else {
+        likeButtonContainer.innerHTML = '<p>Restaurant tidak ditemukan.</p>';
+      }
+      LikeButtonPresenter.init({
+        likeButtonContainer: document.querySelector('#likeButtonContainer'),
+        favoriteRestaurant: FavoriteRestaurantIdb,
+        restaurant: {
+          id: restaurant.id,
+          name: restaurant.name,
+          description: restaurant.description,
+          pictureId: restaurant.pictureId,
+          rating: restaurant.rating,
+        },
+      });
+    } catch (error) {
+      console.log('Error:', error);
+      likeButtonContainer.innerHTML = '<p>Terjadi kesalahan saat memuat data.</p>';
+    }
+  },
 };
 
 export default Detail;

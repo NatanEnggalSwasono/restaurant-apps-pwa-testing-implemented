@@ -4,7 +4,10 @@ import routes from '../routes/routes';
 
 class App {
   constructor({
-    menuHamburger, navList, mainElement, content,
+    menuHamburger,
+    navList,
+    mainElement,
+    content,
   }) {
     this._menuHamburger = menuHamburger;
     this._navList = navList;
