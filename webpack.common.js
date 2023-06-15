@@ -65,6 +65,20 @@ module.exports = {
     }),
     new WorkboxWebpackPlugin.GenerateSW({
       swDest: './sw.bundle.js',
+      skipWaiting: true,
+      clientsClaim: true,
+      runtimeCaching: [
+        {
+          urlPattern: /^https:\/\/restaurant-api.dicoding.dev\//,
+          handler: 'StaleWhileRevalidate',
+          options: {
+            cacheName: 'RESTAURANT_CACHE',
+            cacheableResponse: {
+              statuses: [0, 200],
+            },
+          },
+        },
+      ],
     }),
     new ImageminWebpWebpackPlugin({
       config: [{
