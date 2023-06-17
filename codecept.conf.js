@@ -21,4 +21,12 @@ exports.config = {
     I: './steps_file.js',
   },
   name: 'restaurant-apps-pwa-testing-implemented',
+  plugins: {
+    retryFailedStep: {
+      enabled: true,
+    },
+    screenshotOnFail: {
+      enabled: true,
+    },
+  },
 };

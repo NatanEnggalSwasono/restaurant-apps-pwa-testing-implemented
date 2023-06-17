@@ -25,6 +25,12 @@ header {
     box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 
+@media screen and (max-width: 480px) {
+    .header {
+        background-image: image-set( url('../public/images/heros/hero-image_2_low.jpg'));
+    }
+}
+
 .skip-link {
     position: absolute;
     top: -40px;
