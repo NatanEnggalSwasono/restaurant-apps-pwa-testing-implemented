@@ -3,26 +3,33 @@ const assert = require('assert');
 Feature('Reverse Liking Restaurant');
 
 Before(({ I }) => {
-  I.amOnPage('/#/home');
+  I.amOnPage('/#/favorite');
 });
 
 Scenario('unliking one restaurant', async ({ I }) => {
-  I.amOnPage('/#/home');
+  I.amOnPage('/');
   I.waitForElement('.post .post-content a', 10);
   I.seeElement('.post .post-content a');
 
-  const firstLikedRestoran = locate('.post .post-content a').first();
-  const firstLikedRestoranTitle = await I.grabTextFrom(firstLikedRestoran);
-  I.click(firstLikedRestoran);
+  const firstRestoran = locate('.post .post-content a').first();
+  const firstRestoranTitle = await I.grabTextFrom(firstRestoran);
+  I.click(firstRestoran);
 
   I.waitForElement('#likeButton', 20);
   I.seeElement('#likeButton');
   I.click('#likeButton');
 
-  I.amOnPage('/');
+  I.amOnPage('/#/favorite');
   I.waitForElement('.post', 20);
   I.seeElement('.post');
-  const unlikedRestoranTitle = await I.grabTextFrom('.post .post-content a');
+  const firstLikedRestoran = locate('.post .post-content a').first();
+  const firstLikedRestoranTitle = await I.grabTextFrom(firstLikedRestoran);
+  assert.strictEqual(firstRestoranTitle, firstLikedRestoranTitle);
 
-  assert.strictEqual(firstLikedRestoranTitle, unlikedRestoranTitle);
+  I.click(firstLikedRestoran);
+  I.waitForElement('#likeButton', 20);
+  I.seeElement('#likeButton');
+  I.click('#likeButton');
+
+  I.amOnPage('/#/favorite');
 });
